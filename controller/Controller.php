@@ -51,9 +51,15 @@ class Controller
     }
     public function delete()
     {
-        $masp = $_GET['masp'];
-        $this->customerDB->delete($masp);
-        header('Location: index.php');
+        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+            $masp = $_GET['masp'];
+            $sanpham = $this->customerDB->get($masp);
+            include "view/delete.php";
+        } else {
+            $masp = $_GET['masp'];
+            $this->customerDB->delete($masp);
+            echo '<script type="text/javascript"> alert("Xóa thành công"); window.location.href = "index.php"  </script>';
+        }
     }
     public function edit()
     {
